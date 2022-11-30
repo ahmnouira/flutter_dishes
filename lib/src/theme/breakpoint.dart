@@ -5,6 +5,9 @@ class Breakpoint {
   /// 24.0
   static const y2 = 24.0;
 
+  /// 8.0
+  static const x05 = 8.0;
+
   /// 16.0
   static const x1 = 16.0;
 

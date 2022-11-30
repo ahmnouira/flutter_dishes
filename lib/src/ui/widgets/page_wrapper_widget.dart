@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dishes/src/theme/breakpoint.dart';
 
 class PageWrapperWidget extends StatelessWidget {
   final List<Widget> children;
@@ -8,7 +9,7 @@ class PageWrapperWidget extends StatelessWidget {
   const PageWrapperWidget({
     super.key,
     required this.children,
-    this.padding = 32.0,
+    this.padding = Breakpoint.x1,
   });
 
   @override
@@ -16,7 +17,7 @@ class PageWrapperWidget extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Colors.black26,
       body: Padding(
-        padding: const EdgeInsets.all(32.0),
+        padding: EdgeInsets.all(padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,

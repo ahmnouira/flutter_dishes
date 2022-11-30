@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart' show AppRoutes;
-import 'package:flutter_dishes/src/theme/breakpoint.dart';
+import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 
@@ -20,36 +20,23 @@ class WelcomePage extends StatelessWidget {
           child: Text(
             'My Favorite Dishes',
             style: TextStyle(
-              fontSize: 32.0,
+              fontSize: 28.0,
               color: Colors.white,
-              fontWeight: FontWeight.w900,
+              fontWeight: FontWeight.w700,
             ),
           ),
         ),
-        const SizedBox(
-          height: Breakpoint.x1,
-        ),
-        ElevatedButton(
+        ButtonWidget(
+          text: 'Log in',
           onPressed: () {
             Navigator.pushNamed(context, AppRoutes.loginPage);
           },
-          clipBehavior: Clip.antiAlias,
-          child: const Text(
-            'Log in',
-            style: TextStyle(fontSize: 24.0),
-          ),
         ),
-        const SizedBox(
-          height: Breakpoint.x1,
-        ),
-        ElevatedButton(
+        ButtonWidget(
+          text: 'Register',
           onPressed: () {
             Navigator.pushNamed(context, AppRoutes.registerPage);
           },
-          child: const Text(
-            'Register',
-            style: TextStyle(fontSize: 24.0),
-          ),
         ),
       ],
     );

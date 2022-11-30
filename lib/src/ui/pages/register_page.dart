@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
+import 'package:flutter_dishes/src/data/assets/assets.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
+import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 
@@ -37,9 +39,10 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return PageWrapperWidget(children: [
-      const Flexible(child: HeroWidget()),
-      const SizedBox(
-        height: 18.0,
+      const Expanded(
+        child: HeroWidget(
+          image: Assets.registerHero,
+        ),
       ),
       TextField(
         decoration: const InputDecoration(
@@ -56,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
       const SizedBox(
-        height: 8.0,
+        height: Breakpoint.y1,
       ),
       TextField(
         decoration: const InputDecoration(
@@ -72,15 +75,9 @@ class _RegisterPageState extends State<RegisterPage> {
           color: Colors.white,
         ),
       ),
-      const SizedBox(
-        height: 24.0,
-      ),
-      ElevatedButton(
+      ButtonWidget(
+        text: 'Register',
         onPressed: submit,
-        child: const Text(
-          'Register',
-          style: TextStyle(fontSize: 24.0),
-        ),
       ),
     ]);
   }
