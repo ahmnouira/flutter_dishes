@@ -30,7 +30,7 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {});
     // submit
     try {
-      Navigator.pushNamed(context, AppRoutes.dishesPage);
+      Navigator.pushNamed(context, AppRoutes.loginPage);
     } catch (e) {
       throw e.toString();
     }
