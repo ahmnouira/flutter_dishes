@@ -1,14 +1,16 @@
 class Dish {
-  //
+  // id
+  final int id;
   final String name;
 
-  const Dish({required this.name});
+  const Dish({required this.id, required this.name});
 
   factory Dish.fromJSON(Map<String, dynamic> json) =>
-      Dish(name: json['name'] as String);
+      Dish(id: json['id'] as int, name: json['name'] as String);
 
   Map<String, dynamic> toJSON() {
     return {
+      'id': id,
       'name': name,
     };
   }
