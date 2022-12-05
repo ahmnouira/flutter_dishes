@@ -25,17 +25,28 @@ class DishItemWidget extends StatelessWidget {
       key: Key(item.name),
       title: Text(item.name),
       trailing: Wrap(
-        spacing: -16.0,
+        spacing: -8.0,
         children: [
-          IconButton(
-            onPressed: () {
-              onEdit!(item);
-            },
-            icon: const Icon(
-              Icons.edit,
-              color: Colors.green,
+          if (dishListContext == DishListContext.user)
+            IconButton(
+              onPressed: () {
+                onToggleFavorite!(item);
+              },
+              icon: const Icon(
+                Icons.favorite_outlined,
+                color: Colors.yellow,
+              ),
             ),
-          ),
+          if (dishListContext == DishListContext.admin)
+            IconButton(
+              onPressed: () {
+                onEdit!(item);
+              },
+              icon: const Icon(
+                Icons.edit,
+                color: Colors.green,
+              ),
+            ),
           IconButton(
             onPressed: () {
               onDelete!(item);

@@ -27,17 +27,25 @@ class _DishesPageState extends State<DishesPage> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      _isLoading = false;
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Dishes'),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout)),
+          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.favoritesPage);
             },
-            icon: const Icon(Icons.favorite_sharp),
+            icon: const Icon(Icons.favorite),
           ),
         ],
       ),

@@ -25,6 +25,14 @@ class _FavoritesPage extends State<FavoritesPage> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      _isLoading = false;
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

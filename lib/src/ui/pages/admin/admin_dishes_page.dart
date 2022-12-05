@@ -48,11 +48,21 @@ class _AdminDishesPage extends State<AdminDishesPage> {
   }
 
   @override
+  void initState() {
+    setState(() {
+      _isLoading = false;
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Admin Dishes'),
-        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
+        actions: [
+          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
+        ],
       ),
       body: _isLoading
           ? const LoadingWidget()
