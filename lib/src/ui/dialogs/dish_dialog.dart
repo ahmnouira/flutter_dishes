@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 
 enum DialogAction { add, edit }
@@ -10,8 +11,12 @@ class DishDialog {
     print('$dialogAction');
   }
 
-  Widget buildDialog(DialogAction dialogAction) {
+  Widget buildDialog(DialogAction dialogAction, Dish? item) {
     final bool isAdd = dialogAction == DialogAction.add;
+
+    if (!isAdd && item != null) {
+      _nameController.text = item.name;
+    }
 
     return AlertDialog(
       title: Text(isAdd ? 'Add Dish' : 'Edit Dish'),
