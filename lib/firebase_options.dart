@@ -41,7 +41,7 @@ class DefaultFirebaseOptions {
     authDomain: 'flutter-mydishes.firebaseapp.com',
     storageBucket: 'flutter-mydishes.appspot.com',
     measurementId: 'G-RSF12DJGQM',
-  )
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDUoC8zAQu1gPd9CWRCkHWWu2nIDEOfDuI',
@@ -57,7 +57,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '289444334334',
     projectId: 'flutter-mydishes',
     storageBucket: 'flutter-mydishes.appspot.com',
-    iosClientId: '289444334334-u7thilqn01hqsqvjraauviejuchhlrpc.apps.googleusercontent.com',
+    iosClientId:
+        '289444334334-u7thilqn01hqsqvjraauviejuchhlrpc.apps.googleusercontent.com',
     iosBundleId: 'com.ahmnouira.FlutterDishes.flutterDishes',
   );
 
@@ -67,7 +68,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '289444334334',
     projectId: 'flutter-mydishes',
     storageBucket: 'flutter-mydishes.appspot.com',
-    iosClientId: '289444334334-u7thilqn01hqsqvjraauviejuchhlrpc.apps.googleusercontent.com',
+    iosClientId:
+        '289444334334-u7thilqn01hqsqvjraauviejuchhlrpc.apps.googleusercontent.com',
     iosBundleId: 'com.ahmnouira.FlutterDishes.flutterDishes',
   );
 }
