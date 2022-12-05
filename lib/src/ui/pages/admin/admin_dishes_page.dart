@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
-import 'package:flutter_dishes/src/ui/widgets/admin/admin_dish_list_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
 
 class AdminDishesPage extends StatefulWidget {
@@ -58,10 +58,11 @@ class _AdminDishesPage extends State<AdminDishesPage> {
           ? const LoadingWidget()
           : RefreshIndicator(
               onRefresh: getData,
-              child: AdminDishListWidget(
+              child: DishListViewWidget(
                 list: _list,
                 onDelete: onDelete,
                 onEdit: onEdit,
+                dishListContext: DishListContext.admin,
               ),
             ),
       floatingActionButton: FloatingActionButton(
