@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 
-class DishListWidget extends StatelessWidget {
+class AdminDishListWidget extends StatelessWidget {
   final List<Dish> list;
 
   final void Function(Dish item) onEdit;
   final void Function(Dish item) onDelete;
 
-  const DishListWidget({
+  const AdminDishListWidget({
     super.key,
     required this.list,
     required this.onEdit,

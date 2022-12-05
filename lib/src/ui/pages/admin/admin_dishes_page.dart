@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
-import 'package:flutter_dishes/src/ui/widgets/dish_list_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/admin/admin_dish_list_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
 
 class AdminDishesPage extends StatefulWidget {
@@ -50,12 +50,15 @@ class _AdminDishesPage extends State<AdminDishesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Admin Dishes')),
+      appBar: AppBar(
+        title: const Text('Admin Dishes'),
+        actions: [IconButton(onPressed: () {}, icon: const Icon(Icons.logout))],
+      ),
       body: _isLoading
           ? const LoadingWidget()
           : RefreshIndicator(
               onRefresh: getData,
-              child: DishListWidget(
+              child: AdminDishListWidget(
                 list: _list,
                 onDelete: onDelete,
                 onEdit: onEdit,
