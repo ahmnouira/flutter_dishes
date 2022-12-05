@@ -16,8 +16,8 @@ class DishService {
   }
 
   /// Editing [Dish]
-  Future<void> edit(String id, Dish dish) async {
-    return _collectionReference.doc(id).update(dish.toJSON());
+  Future<void> edit(Dish dish) async {
+    return _collectionReference.doc(dish.id).update(dish.toJSON());
   }
 
   /// Retrieve stream of data

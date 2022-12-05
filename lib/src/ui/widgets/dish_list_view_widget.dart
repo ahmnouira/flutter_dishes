@@ -1,41 +1,66 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_item_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
 
 enum DishListContext { user, userFavorite, admin }
 
 class DishListViewWidget extends StatelessWidget {
-  final List<Dish> list;
+  final Stream<QuerySnapshot<Object?>>? stream;
   final DishListContext dishListContext;
   final void Function(Dish item)? onEdit;
   final void Function(Dish item)? onDelete;
   final void Function(Dish item)? onToggleFavorite;
+  final Future<void> Function() onRefresh;
 
   const DishListViewWidget({
     super.key,
-    required this.list,
+    required this.stream,
     required this.dishListContext,
     this.onEdit,
     this.onDelete,
     this.onToggleFavorite,
+    required this.onRefresh,
   });
+
+  Widget _buildListItem(BuildContext _, DocumentSnapshot snapshot) {
+    final item = Dish.fromSnapshot(snapshot);
+    // final favorite = _foundFirstFavorite(event.reference!.id, favorites);
+
+    const Color iconColor = Colors.amber;
+
+    return DishItemWidget(
+      item: item,
+      onDelete: onDelete,
+      onEdit: onEdit,
+      dishListContext: dishListContext,
+    );
+  }
+
+  Widget _buildList(BuildContext context, List<DocumentSnapshot>? snapshots) {
+    return ListView(
+      padding: const EdgeInsets.symmetric(vertical: Breakpoint.x05),
+      children:
+          snapshots!.map((data) => _buildListItem(context, data)).toList(),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: list.length,
-      padding: const EdgeInsets.symmetric(vertical: Breakpoint.x05),
-      itemBuilder: (context, index) {
-        final item = list[index];
+    return RefreshIndicator(
+      onRefresh: onRefresh,
+      child: StreamBuilder<QuerySnapshot>(
+        stream: stream,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return const LoadingWidget();
+          }
 
-        return DishItemWidget(
-          item: item,
-          onDelete: onDelete,
-          onEdit: onEdit,
-          dishListContext: DishListContext.admin,
-        );
-      },
+          return _buildList(context, snapshot.data?.docs);
+        },
+      ),
     );
   }
 }

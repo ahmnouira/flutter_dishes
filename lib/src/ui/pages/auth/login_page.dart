@@ -53,9 +53,13 @@ class _LoginPageState extends State<LoginPage> {
       delayMilliseconds(
         milliseconds: 0,
         callback: () {
-          Navigator.pushNamed(
+          //  pushReplacementNamed will remove the previous route
+          // in the back stack and replace it with the new route
+          Navigator.pushReplacementNamed(
             context,
-            isAdmin(_email) ? AppRoutes.adminDishesPage : AppRoutes.dishesPage,
+            isAdmin(firebaseUser.email)
+                ? AppRoutes.adminDishesPage
+                : AppRoutes.dishesPage,
           );
         },
       );

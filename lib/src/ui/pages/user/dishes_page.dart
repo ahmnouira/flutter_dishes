@@ -1,9 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
-import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
 
 class DishesPage extends StatefulWidget {
   const DishesPage({super.key});
@@ -15,22 +15,18 @@ class DishesPage extends StatefulWidget {
 }
 
 class _DishesPageState extends State<DishesPage> {
-  bool _isLoading = true;
+  late final Stream<QuerySnapshot<Object?>>? _stream;
 
-  List<Dish> _list = [];
-
-  Future getData() async {
+  Future<void> getData() async {
+    final DishService dishService = DishService();
     setState(() {
-      _list = dishes;
-      _isLoading = false;
+      _stream = dishService.getAll();
     });
   }
 
   @override
   void initState() {
-    setState(() {
-      _isLoading = false;
-    });
+    getData();
     super.initState();
   }
 
@@ -39,26 +35,23 @@ class _DishesPageState extends State<DishesPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Dishes'),
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
           IconButton(
             onPressed: () {
               Navigator.pushNamed(context, AppRoutes.favoritesPage);
             },
-            icon: const Icon(Icons.favorite),
+            icon: const Icon(Icons.star),
           ),
         ],
       ),
-      body: _isLoading
-          ? const LoadingWidget()
-          : RefreshIndicator(
-              onRefresh: getData,
-              child: DishListViewWidget(
-                list: _list,
-                onToggleFavorite: (Dish item) {},
-                dishListContext: DishListContext.user,
-              ),
-            ),
+      body: DishListViewWidget(
+        stream: _stream,
+        onRefresh: getData,
+        onToggleFavorite: (Dish item) {},
+        dishListContext: DishListContext.user,
+      ),
     );
   }
 }
