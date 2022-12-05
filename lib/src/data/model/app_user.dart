@@ -14,7 +14,6 @@ class AppUser {
 
   Map<String, dynamic> toJSON() {
     return {
-      'id': id,
       'name': name,
       'email': email,
     };
@@ -22,6 +21,10 @@ class AppUser {
 
   @override
   String toString() {
-    return toJSON().toString();
+    final map = toJSON();
+    // adding the id
+    map['id'] = id;
+
+    return map.toString();
   }
 }
