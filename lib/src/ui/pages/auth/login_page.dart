@@ -1,9 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
+import 'package:flutter_dishes/src/services/auth_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/auth_form_widget.dart';
 import 'package:flutter_dishes/src/utils/check_fields.dart';
 import 'package:flutter_dishes/src/utils/is_admin.dart';
+import 'package:flutter_dishes/src/utils/timer.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -15,13 +16,15 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String? _email;
-  String? _password;
-  String? _error = '';
+  String _email = '';
+  String _password = '';
+  String _error = '';
+  bool _submitting = false;
 
-  void getUser() {}
-
-  void submit() {
+  Future<void> _onSubmit() async {
+    setState(() {
+      _submitting = true;
+    });
     final String error = checkAuthFields(_email, _password);
 
     if (error.isNotEmpty) {
@@ -31,21 +34,35 @@ class _LoginPageState extends State<LoginPage> {
 
       return;
     }
+    final authService = AuthService();
 
-    if (kDebugMode) {
-      print({'email': _email, 'password': _password});
-    }
-
+    // submit
     try {
-      Navigator.pushNamed(
-        context,
-        isAdmin(_email!) ? AppRoutes.adminDishesPage : AppRoutes.dishesPage,
+      final firebaseUser = await authService.login(_email, _password);
+      if (firebaseUser == null) {
+        return;
+      }
+
+      delayMilliseconds(
+        callback: () {
+          setState(() {
+            _email = '';
+            _password = '';
+          });
+          Navigator.pushNamed(
+            context,
+            isAdmin(_email) ? AppRoutes.adminDishesPage : AppRoutes.dishesPage,
+          );
+        },
       );
     } catch (e) {
-      throw e.toString();
+      setState(() {
+        _error = e.toString();
+      });
     } finally {
       setState(() {
         _error = '';
+        _submitting = false;
       });
     }
   }
@@ -60,8 +77,9 @@ class _LoginPageState extends State<LoginPage> {
       onPasswordChanged: (value) {
         _password = value;
       },
-      onSubmit: submit,
+      onSubmit: _onSubmit,
       error: _error,
+      submitting: _submitting,
     );
   }
 }

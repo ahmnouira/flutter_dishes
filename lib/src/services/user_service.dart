@@ -6,8 +6,8 @@ class UserService {
       FirebaseFirestore.instance.collection('users');
 
   /// Saving [AppUser]
-  void add(AppUser data) {
-    _collectionReference.add(data.toJSON());
+  void add(AppUser user) {
+    _collectionReference.doc(user.id).set(user.toJSON());
   }
 
   /// Getting [AppUser]

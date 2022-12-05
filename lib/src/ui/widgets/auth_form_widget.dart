@@ -11,6 +11,7 @@ enum AuthFormName { login, register }
 class AuthFormWidget extends StatelessWidget {
   final AuthFormName name;
   final String? error;
+  final bool submitting;
   final void Function(String)? onEmailChanged;
   final void Function(String)? onPasswordChanged;
 
@@ -22,6 +23,7 @@ class AuthFormWidget extends StatelessWidget {
     this.onEmailChanged,
     this.onPasswordChanged,
     this.onSubmit,
+    required this.submitting,
     this.error,
   });
 
@@ -58,7 +60,7 @@ class AuthFormWidget extends StatelessWidget {
         ),
       ButtonWidget(
         text: name == AuthFormName.login ? 'Log In' : 'Register',
-        onPressed: onSubmit,
+        onPressed: submitting ? null : onSubmit,
       ),
     ]);
   }

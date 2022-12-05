@@ -16,22 +16,22 @@ class AuthService {
 
   bool? get isEmailVerified => currentUser?.emailVerified;
 
-  Future<String?> register(String email, String password) async {
+  Future<User?> register(String email, String password) async {
     try {
       final result = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      return result.user?.uid;
+      return result.user;
     } on FirebaseAuthException catch (error) {
-      return _handleFirebaseAuthExceptions(error);
+      throw error.code;
     } catch (error) {
-      return _handleError(error);
+      throw error.toString();
     }
   }
 
-  Future<String?> login(String email, String password) async {
+  Future<User?> login(String email, String password) async {
     try {
       final result = await _auth.signInWithEmailAndPassword(
         email: email,
@@ -39,11 +39,12 @@ class AuthService {
       );
 
       // final auth = result.user;
-      return result.user?.uid;
+      return result.user;
     } on FirebaseAuthException catch (error) {
-      return _handleFirebaseAuthExceptions(error);
+      throw error.code;
+      //return _handleFirebaseAuthExceptions(error);
     } catch (error) {
-      return _handleError(error);
+      throw error.toString();
     }
   }
 
@@ -51,21 +52,21 @@ class AuthService {
     await _auth.signOut();
   }
 
-  String? _handleFirebaseAuthExceptions(FirebaseAuthException error) {
+  String? handleFirebaseAuthExceptions(FirebaseAuthException error) {
     if (error.code == 'weak-password') {
       if (kDebugMode) {
-        print('The password is provided is too weak.');
+        throw 'The password is provided is too weak.';
       }
     } else if (error.code == 'email-already-in-use') {
       if (kDebugMode) {
-        print('The account already exists for that email.');
+        throw 'The account already exists for that email.';
       }
     }
 
     return error.message;
   }
 
-  String? _handleError(Object error) {
+  String? handleError(Object error) {
     return error.toString();
   }
 }
