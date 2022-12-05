@@ -10,7 +10,7 @@ import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
-  static const id = 'login';
+  static const routeName = 'login';
 
   @override
   State<LoginPage> createState() => _LoginPageState();

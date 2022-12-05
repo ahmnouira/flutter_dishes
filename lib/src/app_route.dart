@@ -6,17 +6,17 @@ import 'package:flutter_dishes/src/ui/pages/welcome_page.dart';
 
 /// Using class [AppRoutes]
 class AppRoutes {
-  static const welcomePage = WelcomePage.id;
-  static const loginPage = LoginPage.id;
-  static const registerPage = RegisterPage.id;
-  static const dishesPage = DishesPage.id;
+  static const welcomePage = WelcomePage.routeName;
+  static const loginPage = LoginPage.routeName;
+  static const registerPage = RegisterPage.routeName;
+  static const dishesPage = DishesPage.routeName;
 }
 
-String initialRoute = WelcomePage.id;
+String initialRoute = WelcomePage.routeName;
 
 Map<String, Widget Function(BuildContext)> routes = {
-  WelcomePage.id: (context) => const WelcomePage(),
-  LoginPage.id: (context) => const LoginPage(),
-  RegisterPage.id: (context) => const RegisterPage(),
-  DishesPage.id: (context) => const DishesPage(),
+  WelcomePage.routeName: (context) => const WelcomePage(),
+  LoginPage.routeName: (context) => const LoginPage(),
+  RegisterPage.routeName: (context) => const RegisterPage(),
+  DishesPage.routeName: (context) => const DishesPage(),
 };

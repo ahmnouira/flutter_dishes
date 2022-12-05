@@ -10,7 +10,7 @@ import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
-  static const id = 'register';
+  static const routeName = 'register';
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();

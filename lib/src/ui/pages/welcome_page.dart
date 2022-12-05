@@ -7,7 +7,7 @@ import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
 
-  static const id = 'welcome';
+  static const routeName = 'welcome';
 
   @override
   Widget build(BuildContext context) {
