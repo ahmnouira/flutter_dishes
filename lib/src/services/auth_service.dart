@@ -1,5 +1,4 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 class AuthService {
   final _auth = FirebaseAuth.instance;
@@ -24,10 +23,8 @@ class AuthService {
       );
 
       return result.user;
-    } on FirebaseAuthException catch (error) {
-      throw error.code;
     } catch (error) {
-      throw error.toString();
+      rethrow;
     }
   }
 
@@ -52,21 +49,22 @@ class AuthService {
     await _auth.signOut();
   }
 
-  String? handleFirebaseAuthExceptions(FirebaseAuthException error) {
-    if (error.code == 'weak-password') {
-      if (kDebugMode) {
-        throw 'The password is provided is too weak.';
-      }
-    } else if (error.code == 'email-already-in-use') {
-      if (kDebugMode) {
-        throw 'The account already exists for that email.';
-      }
+  String handleFirebaseAuthExceptions(FirebaseAuthException error) {
+    String message = error.code;
+
+    if (message == 'weak-password') {
+      message = 'The password is provided is too weak.';
+    } else if (message == 'email-already-in-use') {
+      message = 'The account already exists for that email.';
+      // user-not-found
+      // invalid-email
+      // wrong-password
     }
 
-    return error.message;
+    return message;
   }
 
-  String? handleError(Object error) {
+  String handleError(Object error) {
     return error.toString();
   }
 }

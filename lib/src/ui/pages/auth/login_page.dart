@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/services/auth_service.dart';
@@ -24,44 +25,48 @@ class _LoginPageState extends State<LoginPage> {
   Future<void> _onSubmit() async {
     setState(() {
       _submitting = true;
+      _error = '';
     });
     final String error = checkAuthFields(_email, _password);
 
     if (error.isNotEmpty) {
       setState(() {
         _error = error;
+        _submitting = false;
       });
 
       return;
     }
     final authService = AuthService();
 
-    // submit
     try {
       final firebaseUser = await authService.login(_email, _password);
       if (firebaseUser == null) {
         return;
       }
 
+      setState(() {
+        _email = '';
+        _password = '';
+      });
+
       delayMilliseconds(
+        milliseconds: 0,
         callback: () {
-          setState(() {
-            _email = '';
-            _password = '';
-          });
           Navigator.pushNamed(
             context,
             isAdmin(_email) ? AppRoutes.adminDishesPage : AppRoutes.dishesPage,
           );
         },
       );
+    } on FirebaseAuthException catch (error) {
+      setState(() {
+        _error = authService.handleFirebaseAuthExceptions(error);
+        _submitting = false;
+      });
     } catch (e) {
       setState(() {
-        _error = e.toString();
-      });
-    } finally {
-      setState(() {
-        _error = '';
+        _error = authService.handleError(e);
         _submitting = false;
       });
     }

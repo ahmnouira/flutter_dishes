@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/data/model/app_user.dart';
@@ -25,6 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<void> _onSubmit() async {
     setState(() {
       _submitting = true;
+      _error = '';
     });
     final String error = checkAuthFields(_email, _password);
 
@@ -57,23 +59,24 @@ class _RegisterPageState extends State<RegisterPage> {
         email: firebaseUser.email ?? _email,
       );
       userService.add(user);
+      setState(() {
+        _email = '';
+        _password = '';
+      });
       delayMilliseconds(
+        milliseconds: 0,
         callback: () {
-          setState(() {
-            _email = '';
-            _password = '';
-          });
           Navigator.pushNamed(context, AppRoutes.loginPage);
         },
       );
-    } catch (e) {
-      print(e);
+    } on FirebaseAuthException catch (error) {
       setState(() {
-        _error = e.toString();
+        _error = authService.handleFirebaseAuthExceptions(error);
+        _submitting = false;
       });
-    } finally {
+    } catch (e) {
       setState(() {
-        _error = '';
+        _error = authService.handleError(e);
         _submitting = false;
       });
     }
