@@ -6,6 +6,7 @@ import 'package:flutter_dishes/src/theme/breakpoint.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/text_field_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -44,36 +45,22 @@ class _RegisterPageState extends State<RegisterPage> {
           image: Assets.registerHero,
         ),
       ),
-      TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter your email',
-        ),
+      TextFieldWidget(
+        placeholder: 'Enter your email',
         keyboardType: TextInputType.emailAddress,
         onChanged: (value) {
           _email = value;
         },
-        style: const TextStyle(
-          fontSize: Breakpoint.x1,
-          color: Colors.white,
-        ),
       ),
       const SizedBox(
         height: Breakpoint.y1,
       ),
-      TextField(
-        decoration: const InputDecoration(
-          border: OutlineInputBorder(),
-          hintText: 'Enter your password',
-        ),
+      TextFieldWidget(
+        placeholder: 'Enter your password',
         obscureText: true,
         onChanged: (value) {
           _password = value;
         },
-        style: const TextStyle(
-          fontSize: Breakpoint.x1,
-          color: Colors.white,
-        ),
       ),
       ButtonWidget(
         text: 'Register',
