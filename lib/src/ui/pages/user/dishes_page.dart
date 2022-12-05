@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/user/user_dish_list_widget.dart';
 
 class DishesPage extends StatefulWidget {
   const DishesPage({super.key});
@@ -45,9 +45,10 @@ class _DishesPageState extends State<DishesPage> {
           ? const LoadingWidget()
           : RefreshIndicator(
               onRefresh: getData,
-              child: UserDishListWidget(
+              child: DishListViewWidget(
                 list: _list,
                 onToggleFavorite: (Dish item) {},
+                dishListContext: DishListContext.user,
               ),
             ),
     );

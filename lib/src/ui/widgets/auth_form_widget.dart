@@ -3,19 +3,19 @@ import 'package:flutter_dishes/src/data/assets/assets.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/auth_wrapper_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/text_field_widget.dart';
 
-enum PageAuthName { login, register }
+enum AuthFormName { login, register }
 
-class PageAuthWidget extends StatelessWidget {
-  final PageAuthName name;
+class AuthFormWidget extends StatelessWidget {
+  final AuthFormName name;
   final void Function(String)? onEmailChanged;
   final void Function(String)? onPasswordChanged;
 
   final void Function()? onSubmit;
 
-  const PageAuthWidget({
+  const AuthFormWidget({
     super.key,
     this.onEmailChanged,
     this.onPasswordChanged,
@@ -25,10 +25,10 @@ class PageAuthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapperWidget(children: [
+    return AuthWrapperWidget(children: [
       Expanded(
         child: HeroWidget(
-          image: name == PageAuthName.login
+          image: name == AuthFormName.login
               ? Assets.loginHero
               : Assets.registerHero,
         ),
@@ -47,7 +47,7 @@ class PageAuthWidget extends StatelessWidget {
         onChanged: onPasswordChanged,
       ),
       ButtonWidget(
-        text: name == PageAuthName.login ? 'Log In' : 'Register',
+        text: name == AuthFormName.login ? 'Log In' : 'Register',
         onPressed: onSubmit,
       ),
     ]);

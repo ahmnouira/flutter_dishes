@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
-import 'package:flutter_dishes/src/ui/widgets/page_auth.widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/auth_form_widget.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -34,8 +34,8 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return PageAuthWidget(
-      name: PageAuthName.register,
+    return AuthFormWidget(
+      name: AuthFormName.register,
       onEmailChanged: (value) {
         _email = value;
       },

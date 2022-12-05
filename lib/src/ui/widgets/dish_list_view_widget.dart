@@ -3,7 +3,7 @@ import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_item_widget.dart';
 
-enum DishListContext { user, admin }
+enum DishListContext { user, userFavorite, admin }
 
 class DishListViewWidget extends StatelessWidget {
   final List<Dish> list;

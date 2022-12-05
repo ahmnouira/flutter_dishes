@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart' show AppRoutes;
+import 'package:flutter_dishes/src/ui/widgets/auth_wrapper_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/page_wrapper_widget.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -11,7 +11,7 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PageWrapperWidget(
+    return AuthWrapperWidget(
       children: [
         const Expanded(
           child: HeroWidget(),
