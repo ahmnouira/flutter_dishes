@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/services/auth_service.dart';
 import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
@@ -15,19 +16,21 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPage extends State<FavoritesPage> {
-  late final Stream<QuerySnapshot<Object?>>? _stream;
+  late final List<Dish> _list;
   final authService = AuthService();
 
-  Future<void> getData() async {
+  Future<void> _getData() async {
     final dishService = DishService();
+    final list =
+        await dishService.getAllFavoriteByUid(authService.uid.toString());
     setState(() {
-      _stream = dishService.getAll();
+      _list = list;
     });
   }
 
   @override
   void initState() {
-    getData();
+    _getData();
     super.initState();
   }
 
@@ -37,9 +40,8 @@ class _FavoritesPage extends State<FavoritesPage> {
       appBar: PageWidget.buildSimpleAppBar('User Favorite Dishes'),
       body: DishListViewWidget(
         uid: authService.uid.toString(),
-        stream: _stream,
-        onRefresh: getData,
-        dishListContext: DishListContext.userFavorite,
+        onRefresh: _getData,
+        list: _list,
       ),
     );
   }

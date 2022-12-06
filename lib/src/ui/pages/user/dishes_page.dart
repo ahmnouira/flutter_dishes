@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/enums/dist_list_context_eum.dart';
 import 'package:flutter_dishes/src/services/auth_service.dart';
 import 'package:flutter_dishes/src/services/dish_service.dart';
-import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/dish_stream_list_view_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
 class DishesPage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _DishesPageState extends State<DishesPage> {
 
     return Scaffold(
       appBar: pageWidget.buildAppBar(context, 'User Dishes', PageContext.user),
-      body: DishListViewWidget(
+      body: DishStreamListViewWidget(
         uid: authService.uid.toString(),
         stream: dishServices.getAll(),
         onToggleFavorite: (item) {

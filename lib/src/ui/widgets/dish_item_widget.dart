@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/enums/dist_list_context_eum.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
-import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 
 class DishItemWidget extends StatelessWidget {
   final Dish item;
