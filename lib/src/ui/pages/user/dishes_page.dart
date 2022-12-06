@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dishes/src/app_route.dart';
-import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
-import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
+import 'package:flutter_dishes/src/enums/dist_list_context_eum.dart';
+import 'package:flutter_dishes/src/services/auth_service.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
+import 'package:flutter_dishes/src/ui/widgets/dish_stream_list_view_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
 class DishesPage extends StatefulWidget {
   const DishesPage({super.key});
@@ -15,50 +16,36 @@ class DishesPage extends StatefulWidget {
 }
 
 class _DishesPageState extends State<DishesPage> {
-  bool _isLoading = true;
+  final pageWidget = PageWidget();
+  final authService = AuthService();
 
-  List<Dish> _list = [];
-
-  Future getData() async {
-    setState(() {
-      _list = dishes;
-      _isLoading = false;
-    });
+  Future<void> onToggleFavorite(Dish dish) async {
+    final dishService = DishService();
+    dishService.toggle(authService.uid.toString(), dish.id);
   }
 
   @override
   void initState() {
-    setState(() {
-      _isLoading = false;
-    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final dishServices = DishService();
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Dishes'),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.favoritesPage);
-            },
-            icon: const Icon(Icons.favorite),
-          ),
-        ],
+      appBar: pageWidget.buildAppBar(context, 'User Dishes', PageContext.user),
+      body: DishStreamListViewWidget(
+        uid: authService.uid.toString(),
+        stream: dishServices.getAll(),
+        onToggleFavorite: (item) {
+          onToggleFavorite(item).then((_) {
+            // snackBar(context, content: '${item.name} saved.');
+          });
+        },
+        dishListContext: DishListContext.user,
+        onRefresh: () async {},
       ),
-      body: _isLoading
-          ? const LoadingWidget()
-          : RefreshIndicator(
-              onRefresh: getData,
-              child: DishListViewWidget(
-                list: _list,
-                onToggleFavorite: (Dish item) {},
-                dishListContext: DishListContext.user,
-              ),
-            ),
     );
   }
 }

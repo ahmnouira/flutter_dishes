@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "289444334334",
+    "project_id": "flutter-mydishes",
+    "storage_bucket": "flutter-mydishes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:289444334334:android:ba0c528efc64de313633af",
+        "android_client_info": {
+          "package_name": "com.ahmnouira.FlutterDishes.flutter_dishes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "289444334334-em04pgctci0toov7sab76t26tcqjvujm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUoC8zAQu1gPd9CWRCkHWWu2nIDEOfDuI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "289444334334-em04pgctci0toov7sab76t26tcqjvujm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

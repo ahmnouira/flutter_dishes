@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dishes/src/data/dishes.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/enums/dist_list_context_eum.dart';
+import 'package:flutter_dishes/src/services/auth_service.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
-import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/dish_stream_list_view_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/snackbar.dart';
 
 class AdminDishesPage extends StatefulWidget {
   const AdminDishesPage({super.key});
@@ -14,23 +18,25 @@ class AdminDishesPage extends StatefulWidget {
 }
 
 class _AdminDishesPage extends State<AdminDishesPage> {
-  bool _isLoading = true;
+  final DishService dishService = DishService();
+  final AuthService authService = AuthService();
 
-  List<Dish> _list = [];
+  late final Stream<QuerySnapshot<Object?>>? _stream;
+
+  final pageWidget = PageWidget();
+
+  Future<void> getData() async {
+    setState(() {
+      _stream = dishService.getAll();
+    });
+  }
 
   void _showDialog(DialogAction dialogAction, Dish? item) {
     final dialog = DishDialog();
     showDialog(
       context: context,
-      builder: (context) => dialog.buildDialog(dialogAction, item),
+      builder: (context) => dialog.buildDialog(context, dialogAction, item),
     );
-  }
-
-  Future getData() async {
-    setState(() {
-      _list = dishes;
-      _isLoading = false;
-    });
   }
 
   void onAdd() {
@@ -41,40 +47,36 @@ class _AdminDishesPage extends State<AdminDishesPage> {
     _showDialog(DialogAction.edit, item);
   }
 
-  void onDelete(Dish item) {
-    setState(() {
-      _list.removeWhere((element) => element.id == item.id);
-    });
+  Future<void> onDelete(Dish item) async {
+    await dishService.delete(item.id);
   }
 
   @override
   void initState() {
-    setState(() {
-      _isLoading = false;
-    });
+    getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Admin Dishes'),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
-        ],
+      appBar: pageWidget.buildAppBar(
+        context,
+        'Admin Dishes',
+        PageContext.admin,
       ),
-      body: _isLoading
-          ? const LoadingWidget()
-          : RefreshIndicator(
-              onRefresh: getData,
-              child: DishListViewWidget(
-                list: _list,
-                onDelete: onDelete,
-                onEdit: onEdit,
-                dishListContext: DishListContext.admin,
-              ),
-            ),
+      body: DishStreamListViewWidget(
+        uid: authService.uid.toString(),
+        stream: _stream,
+        onRefresh: getData,
+        onDelete: (item) {
+          onDelete(item).then((_) {
+            snackBar(context, content: '${item.name} is deleted.');
+          });
+        },
+        onEdit: onEdit,
+        dishListContext: DishListContext.admin,
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: onAdd,
         child: const Icon(Icons.add),

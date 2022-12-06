@@ -4,9 +4,14 @@ import 'package:flutter_dishes/src/theme/size.dart';
 
 class ButtonWidget extends StatelessWidget {
   final String text;
+
   final void Function()? onPressed;
 
-  const ButtonWidget({super.key, required this.text, this.onPressed});
+  const ButtonWidget({
+    super.key,
+    required this.text,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

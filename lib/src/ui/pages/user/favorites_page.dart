@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/services/auth_service.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
-import 'package:flutter_dishes/src/ui/widgets/loading_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -13,40 +16,33 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPage extends State<FavoritesPage> {
-  bool _isLoading = true;
+  late List<Dish> _list = [];
+  final authService = AuthService();
 
-  List<Dish> _list = [];
-
-  Future getData() async {
+  Future<void> _getData() async {
+    final dishService = DishService();
+    final list =
+        await dishService.getAllFavoriteByUid(authService.uid.toString());
     setState(() {
-      _list = [];
-      _isLoading = false;
+      _list = list;
     });
   }
 
   @override
   void initState() {
-    setState(() {
-      _isLoading = false;
-    });
+    _getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Dishes'),
+      appBar: PageWidget.buildSimpleAppBar('User Favorite Dishes'),
+      body: DishListViewWidget(
+        uid: authService.uid.toString(),
+        onRefresh: _getData,
+        list: _list,
       ),
-      body: _isLoading
-          ? const LoadingWidget()
-          : RefreshIndicator(
-              onRefresh: getData,
-              child: DishListViewWidget(
-                list: _list,
-                dishListContext: DishListContext.userFavorite,
-              ),
-            ),
     );
   }
 }
