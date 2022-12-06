@@ -34,10 +34,20 @@ class DishDialog {
 
     try {
       if (dialogAction == DialogAction.add && item == null) {
-        final dish = Dish(id: '', name: _nameController.text);
+        final dish = Dish(
+          id: '',
+          name: _nameController.text,
+          createdAt: DateTime.now(),
+          favoriteBy: [],
+        );
         dishService.add(dish);
       } else if (dialogAction == DialogAction.edit && item != null) {
-        final dish = Dish(id: item.id, name: _nameController.text);
+        final dish = Dish(
+          id: item.id,
+          name: _nameController.text,
+          createdAt: item.createdAt,
+          favoriteBy: item.favoriteBy,
+        );
         dishService.edit(dish);
       }
 

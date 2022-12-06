@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/services/auth_service.dart';
-import 'package:flutter_dishes/src/services/favorite_service.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
@@ -19,9 +19,9 @@ class _FavoritesPage extends State<FavoritesPage> {
   final authService = AuthService();
 
   Future<void> getData() async {
-    final favoriteService = FavoriteService();
+    final dishService = DishService();
     setState(() {
-      _stream = favoriteService.getAll(authService.uid.toString());
+      _stream = dishService.getAll();
     });
   }
 

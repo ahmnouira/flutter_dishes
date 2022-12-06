@@ -27,7 +27,6 @@ class _AdminDishesPage extends State<AdminDishesPage> {
   final pageWidget = PageWidget();
 
   Future<void> getData() async {
-    print('getData');
     setState(() {
       _stream = dishService.getAll();
     });

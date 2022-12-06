@@ -16,7 +16,6 @@ class DishListViewWidget extends StatelessWidget {
   final Future<void> Function() onRefresh;
 
   final String uid;
-  final List<String> favorites;
 
   const DishListViewWidget({
     super.key,
@@ -24,7 +23,6 @@ class DishListViewWidget extends StatelessWidget {
     required this.dishListContext,
     required this.uid,
     required this.onRefresh,
-    this.favorites = const [],
     this.onEdit,
     this.onDelete,
     this.onToggleFavorite,
@@ -33,7 +31,7 @@ class DishListViewWidget extends StatelessWidget {
   Widget _buildListItem(BuildContext _, DocumentSnapshot snapshot) {
     final item = Dish.fromSnapshot(snapshot);
 
-    final isFavorite = favorites.contains(item.id);
+    final isFavorite = item.favoriteBy.contains(uid);
 
     return DishItemWidget(
       item: item,
