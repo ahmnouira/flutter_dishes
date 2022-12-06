@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
-import 'package:flutter_dishes/src/services/dish_service.dart';
+import 'package:flutter_dishes/src/services/favorite_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 
 class DishesPage extends StatefulWidget {
@@ -17,11 +17,25 @@ class DishesPage extends StatefulWidget {
 class _DishesPageState extends State<DishesPage> {
   late final Stream<QuerySnapshot<Object?>>? _stream;
 
+  final favoriteService = FavoriteService();
+
+  String _getRouteArgument(String key) {
+    final routeArguments =
+        ModalRoute.of(context)!.settings.arguments as Map<String, Object>;
+
+    return routeArguments[key] as String;
+  }
+
   Future<void> getData() async {
-    final DishService dishService = DishService();
+    final uid = _getRouteArgument('uid');
     setState(() {
-      _stream = dishService.getAll();
+      _stream = favoriteService.getAll(uid);
     });
+  }
+
+  void onToggleFavorite(Dish dish) {
+    final uid = _getRouteArgument('uid');
+    favoriteService.toggle(uid, dish);
   }
 
   @override
@@ -48,9 +62,9 @@ class _DishesPageState extends State<DishesPage> {
       ),
       body: DishListViewWidget(
         stream: _stream,
-        onRefresh: getData,
-        onToggleFavorite: (Dish item) {},
+        onToggleFavorite: onToggleFavorite,
         dishListContext: DishListContext.user,
+        onRefresh: getData,
       ),
     );
   }
