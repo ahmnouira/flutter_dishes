@@ -37,30 +37,36 @@ class AuthFormWidget extends StatelessWidget {
               : Assets.registerHero,
         ),
       ),
-      TextFieldWidget(
-        placeholder: 'Enter your email',
-        keyboardType: TextInputType.emailAddress,
-        onChanged: onEmailChanged,
-      ),
-      const SizedBox(
-        height: Breakpoint.x1,
-      ),
-      TextFieldWidget(
-        placeholder: 'Enter your password',
-        obscureText: true,
-        onChanged: onPasswordChanged,
-      ),
-      if (error != null)
-        Padding(
-          padding: const EdgeInsets.only(top: Breakpoint.y1),
-          child: Text(
-            error!,
-            style: const TextStyle(color: Colors.red),
+      Container(
+        padding: const EdgeInsets.all(Breakpoint.x1),
+        child:
+            Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          TextFieldWidget(
+            placeholder: 'Enter your email',
+            keyboardType: TextInputType.emailAddress,
+            onChanged: onEmailChanged,
           ),
-        ),
-      ButtonWidget(
-        text: name == AuthFormName.login ? 'Log In' : 'Register',
-        onPressed: submitting ? null : onSubmit,
+          const SizedBox(
+            height: Breakpoint.x1,
+          ),
+          TextFieldWidget(
+            placeholder: 'Enter your password',
+            obscureText: true,
+            onChanged: onPasswordChanged,
+          ),
+          if (error != null)
+            Padding(
+              padding: const EdgeInsets.only(top: Breakpoint.y1),
+              child: Text(
+                error!,
+                style: const TextStyle(color: Colors.red),
+              ),
+            ),
+          ButtonWidget(
+            text: name == AuthFormName.login ? 'Log In' : 'Register',
+            onPressed: submitting ? null : onSubmit,
+          ),
+        ]),
       ),
     ]);
   }

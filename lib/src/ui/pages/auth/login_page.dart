@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       delayMilliseconds(
         milliseconds: 0,
         callback: () {
-          //  pushReplacementNamed will remove the previous route
+          // pushReplacementNamed will remove the previous route
           // in the back stack and replace it with the new route
           Navigator.pushReplacementNamed(
             context,

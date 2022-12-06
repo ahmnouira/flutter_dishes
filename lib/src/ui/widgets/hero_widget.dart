@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/assets/assets.dart';
-import 'package:flutter_dishes/src/theme/breakpoint.dart';
 
 class HeroWidget extends StatelessWidget {
   final String image;
@@ -11,8 +10,7 @@ class HeroWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Hero(
       tag: 'logo',
-      child: Container(
-        padding: const EdgeInsets.only(bottom: Breakpoint.x2),
+      child: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Image.asset(
