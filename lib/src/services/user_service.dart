@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_dishes/src/data/model/app_user.dart';
+import 'package:flutter_dishes/src/data/model/app_user_model.dart';
 
 class UserService {
   final CollectionReference _collectionReference =

@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart';
-import 'package:flutter_dishes/src/data/model/app_user.dart';
+import 'package:flutter_dishes/src/data/model/app_user_model.dart';
 import 'package:flutter_dishes/src/services/auth_service.dart';
 import 'package:flutter_dishes/src/services/user_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/auth_form_widget.dart';

@@ -19,21 +19,20 @@ class Dish {
   factory Dish.fromJSON(Map<String, dynamic> json) => Dish(
         id: json['id'] as String,
         name: json['name'] as String,
-        exists: json['exists'] as bool,
-        createdAt: json['created_at'] as DateTime,
-        favoriteBy: json['favorite_by'] as List<String>,
+        createdAt: DateTime.parse(json['created_at'] as String),
+        favoriteBy: List<String>.from(json['favorite_by']),
       );
 
   // To save only the name of the dish in the db
   Map<String, dynamic> toJSON() {
     return {
       'name': name,
-      'created_at': createdAt,
+      'created_at': createdAt.toString(),
       'favorite_by': favoriteBy,
     };
   }
 
-  /// Takes a Firestore and converts to a [Dish]
+  /// Takes a Firestore document and converts to a [Dish]
   factory Dish.fromSnapshot(DocumentSnapshot snapshot) {
     final data = snapshot.data() as Map<String, dynamic>;
     data['id'] = snapshot.reference.id;

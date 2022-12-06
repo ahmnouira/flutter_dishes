@@ -53,14 +53,12 @@ class DishService {
   /// Toggling [Dish]
   Future<void> toggle(String uid, String id) async {
     final doc = await get(id);
-    final favoriteBy = doc.get('favorite_by') as List<String>;
-
-    if (favoriteBy.contains(uid)) {
-      favoriteBy.remove(uid);
+    final dbDish = Dish.fromSnapshot(doc);
+    if (dbDish.favoriteBy.contains(uid)) {
+      dbDish.favoriteBy.remove(uid);
     } else {
-      favoriteBy.add(uid);
+      dbDish.favoriteBy.add(uid);
     }
-
-    return _collectionReference.doc(id).update({'favorite_by': favoriteBy});
+    edit(dbDish);
   }
 }

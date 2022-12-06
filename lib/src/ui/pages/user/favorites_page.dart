@@ -16,7 +16,7 @@ class FavoritesPage extends StatefulWidget {
 }
 
 class _FavoritesPage extends State<FavoritesPage> {
-  late final List<Dish> _list;
+  late List<Dish> _list = [];
   final authService = AuthService();
 
   Future<void> _getData() async {
