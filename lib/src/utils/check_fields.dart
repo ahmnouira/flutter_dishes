@@ -10,3 +10,14 @@ String checkAuthFields(String? email, String? password) {
 
   return error;
 }
+
+String checkField(String? field) {
+  String error = '';
+  if (field == null) {
+    error = 'field is required.';
+  } else if (field.isEmpty) {
+    error = 'Email is empty.';
+  }
+
+  return error;
+}

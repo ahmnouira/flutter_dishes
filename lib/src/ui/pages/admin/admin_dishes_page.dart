@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/snackbar.dart';
 
 class AdminDishesPage extends StatefulWidget {
   const AdminDishesPage({super.key});
@@ -32,7 +35,7 @@ class _AdminDishesPage extends State<AdminDishesPage> {
     final dialog = DishDialog();
     showDialog(
       context: context,
-      builder: (context) => dialog.buildDialog(dialogAction, item),
+      builder: (context) => dialog.buildDialog(context, dialogAction, item),
     );
   }
 
@@ -44,8 +47,8 @@ class _AdminDishesPage extends State<AdminDishesPage> {
     _showDialog(DialogAction.edit, item);
   }
 
-  void onDelete(Dish item) {
-    dishService.delete(item.id);
+  Future<void> onDelete(Dish item) async {
+    await dishService.delete(item.id);
   }
 
   @override
@@ -65,7 +68,11 @@ class _AdminDishesPage extends State<AdminDishesPage> {
       body: DishListViewWidget(
         stream: _stream,
         onRefresh: getData,
-        onDelete: onDelete,
+        onDelete: (item) {
+          onDelete(item).then((_) {
+            snackBar(context, content: '${item.name} is deleted.');
+          });
+        },
         onEdit: onEdit,
         dishListContext: DishListContext.admin,
       ),

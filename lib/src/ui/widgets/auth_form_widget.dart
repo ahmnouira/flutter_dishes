@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/data/assets/assets.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 import 'package:flutter_dishes/src/ui/widgets/auth_page_widget.dart';
@@ -26,6 +27,17 @@ class AuthFormWidget extends StatelessWidget {
     required this.submitting,
     this.error,
   });
+
+  void _navigate(
+    BuildContext context,
+    AuthFormName name,
+  ) {
+    if (name == AuthFormName.login) {
+      Navigator.pushNamed(context, AppRoutes.registerPage);
+    } else if (name == AuthFormName.register) {
+      Navigator.pushNamed(context, AppRoutes.loginPage);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +77,14 @@ class AuthFormWidget extends StatelessWidget {
           ButtonWidget(
             text: name == AuthFormName.login ? 'Log In' : 'Register',
             onPressed: submitting ? null : onSubmit,
+          ),
+          ButtonWidget(
+            text: name == AuthFormName.login ? 'Register' : 'Log In',
+            onPressed: submitting
+                ? null
+                : () {
+                    _navigate(context, name);
+                  },
           ),
         ]),
       ),
