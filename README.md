@@ -1,3 +1,3 @@
 # flutter_dishes
 
-A new Flutter project.
+This a Flutter application that allows admins to manage dishes and user to save his favorites dishes.
