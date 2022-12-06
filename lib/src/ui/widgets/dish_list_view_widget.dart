@@ -15,27 +15,33 @@ class DishListViewWidget extends StatelessWidget {
   final void Function(Dish item)? onToggleFavorite;
   final Future<void> Function() onRefresh;
 
+  final String uid;
+  final List<String> favorites;
+
   const DishListViewWidget({
     super.key,
     required this.stream,
     required this.dishListContext,
+    required this.uid,
+    required this.onRefresh,
+    this.favorites = const [],
     this.onEdit,
     this.onDelete,
     this.onToggleFavorite,
-    required this.onRefresh,
   });
 
   Widget _buildListItem(BuildContext _, DocumentSnapshot snapshot) {
     final item = Dish.fromSnapshot(snapshot);
-    // final favorite = _foundFirstFavorite(event.reference!.id, favorites);
 
-    const Color iconColor = Colors.amber;
+    final isFavorite = favorites.contains(item.id);
 
     return DishItemWidget(
       item: item,
       onDelete: onDelete,
       onEdit: onEdit,
+      onToggleFavorite: onToggleFavorite,
       dishListContext: dishListContext,
+      isFavorite: isFavorite,
     );
   }
 

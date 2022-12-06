@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/services/auth_service.dart';
 import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
@@ -19,6 +20,7 @@ class AdminDishesPage extends StatefulWidget {
 
 class _AdminDishesPage extends State<AdminDishesPage> {
   final DishService dishService = DishService();
+  final AuthService authService = AuthService();
 
   late final Stream<QuerySnapshot<Object?>>? _stream;
 
@@ -66,6 +68,7 @@ class _AdminDishesPage extends State<AdminDishesPage> {
         PageContext.admin,
       ),
       body: DishListViewWidget(
+        uid: authService.uid.toString(),
         stream: _stream,
         onRefresh: getData,
         onDelete: (item) {

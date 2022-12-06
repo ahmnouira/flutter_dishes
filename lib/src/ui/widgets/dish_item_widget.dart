@@ -10,6 +10,7 @@ class DishItemWidget extends StatelessWidget {
   final void Function(Dish item)? onEdit;
   final void Function(Dish item)? onDelete;
   final void Function(Dish item)? onToggleFavorite;
+  final bool isFavorite;
 
   const DishItemWidget({
     super.key,
@@ -18,19 +19,27 @@ class DishItemWidget extends StatelessWidget {
     this.onEdit,
     this.onDelete,
     this.onToggleFavorite,
+    this.isFavorite = false,
   });
 
   Widget? _buildTrailing() {
+    final favoriteIcon = isFavorite
+        ? const Icon(
+            Icons.star,
+            color: Colors.yellow,
+          )
+        : const Icon(
+            Icons.star_outline,
+            color: Colors.grey,
+          );
+
     Widget? trailing;
     if (dishListContext == DishListContext.user) {
       trailing = IconButton(
         onPressed: () {
           onToggleFavorite!(item);
         },
-        icon: const Icon(
-          Icons.star,
-          color: Colors.yellow,
-        ),
+        icon: favoriteIcon,
       );
     } else if (dishListContext == DishListContext.userFavorite) {
       trailing = const IconButton(

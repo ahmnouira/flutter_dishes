@@ -59,6 +59,7 @@ class AuthService {
       // user-not-found
       // invalid-email
       // wrong-password
+      // request-network-failed
     }
 
     return message;

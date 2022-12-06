@@ -22,14 +22,53 @@ class FavoriteService {
     return _getCollection(uid).doc(id).get();
   }
 
+  Future<bool> foundOne(String uid, String id) async {
+    final dishDocument = await get(uid, id);
+
+    return dishDocument.exists;
+  }
+
   /// Toggling favorite[Dish]
   Future<void> toggle(String uid, Dish dish) async {
-    final dishDocument = await get(uid, dish.id);
-    if (dishDocument.exists) {
+    final found = await foundOne(uid, dish.id);
+    if (found) {
       await delete(uid, dish.id);
     } else {
       await add(uid, dish);
     }
+  }
+
+  /// Getting once all
+  Future<QuerySnapshot> getOnceAll(String uid) {
+    return _getCollection(uid).get();
+  }
+
+  Future<List<Dish>> getAllOnceByUid(String uid) async {
+    final List<Dish> list = [];
+    final snapshots = await getOnceAll(uid);
+    final docs = snapshots.docs;
+    for (final doc in docs) {
+      final favorite = Dish.fromSnapshot(doc);
+      list.add(favorite);
+    }
+
+    return list;
+  }
+
+  List<Dish> getAllByUid(String uid) {
+    final List<Dish> list = [];
+    final snapshots = getAll(uid);
+
+    snapshots.forEach((element) {
+      for (final doc in element.docs) {
+        print(doc);
+
+        final dish = Dish.fromSnapshot(doc);
+        list.add(dish);
+      }
+    });
+
+    return list;
   }
 
   /// Retrieve stream of data

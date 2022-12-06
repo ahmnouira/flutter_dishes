@@ -49,7 +49,10 @@ class DishDialog {
   }
 
   Widget buildDialog(
-      BuildContext context, DialogAction dialogAction, Dish? item) {
+    BuildContext context,
+    DialogAction dialogAction,
+    Dish? item,
+  ) {
     final bool isAdd = dialogAction == DialogAction.add;
 
     if (!isAdd && item != null) {
