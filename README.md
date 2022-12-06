@@ -13,18 +13,14 @@ To add more dishes to the app you can login with the following credentials:
 
 ## Overview  
 
-| WelcomeScreen     | LoginScreen       |
-| ----------------- | ----------------- |
-| ![1](./img/1.png) | ![2](./img/2.png) |
+| WelcomeScreen     | LoginScreen        |
+| ----------------- | ------------------ |
+| ![1](./img/1.png) | ![2](./img/2.png)  |
 
----
+| AdminDishesScreen | AdminEditDish      |
+| ----------------- | ------------------ |
+| ![3](./img/3.png) | ![4](./img/4.png)  |
 
-| AdminDishesScreen | AdminEditDish     |
-| ----------------- | ----------------- |
-| ![3](./img/3.png) | ![4](./img/4.png) |
-
----
-
-| UserDishesScreen  | UserFavDishes     |
-| ----------------- | ----------------- |
-| ![5](./img/5.png) | ![6](./img/6.png) |
+| UserDishesScreen  | UserFavDishes      |
+| ----------------- | ------------------ |
+| ![5](./img/5.png) | ![6](./img/6.png)  |
