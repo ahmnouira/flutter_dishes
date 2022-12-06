@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dishes/src/app_route.dart';
 import 'package:flutter_dishes/src/data/model/dish_model.dart';
+import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/services/favorite_service.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
 class DishesPage extends StatefulWidget {
   const DishesPage({super.key});
@@ -17,7 +18,7 @@ class DishesPage extends StatefulWidget {
 class _DishesPageState extends State<DishesPage> {
   late final Stream<QuerySnapshot<Object?>>? _stream;
 
-  final favoriteService = FavoriteService();
+  final pageWidget = PageWidget();
 
   String _getRouteArgument(String key) {
     final routeArguments =
@@ -27,13 +28,14 @@ class _DishesPageState extends State<DishesPage> {
   }
 
   Future<void> getData() async {
-    final uid = _getRouteArgument('uid');
+    final dishServices = DishService();
     setState(() {
-      _stream = favoriteService.getAll(uid);
+      _stream = dishServices.getAll();
     });
   }
 
   void onToggleFavorite(Dish dish) {
+    final favoriteService = FavoriteService();
     final uid = _getRouteArgument('uid');
     favoriteService.toggle(uid, dish);
   }
@@ -47,19 +49,7 @@ class _DishesPageState extends State<DishesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('User Dishes'),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, AppRoutes.favoritesPage);
-            },
-            icon: const Icon(Icons.star),
-          ),
-        ],
-      ),
+      appBar: pageWidget.buildAppBar(context, 'User Dishes', PageContext.user),
       body: DishListViewWidget(
         stream: _stream,
         onToggleFavorite: onToggleFavorite,

@@ -4,6 +4,7 @@ import 'package:flutter_dishes/src/data/model/dish_model.dart';
 import 'package:flutter_dishes/src/services/dish_service.dart';
 import 'package:flutter_dishes/src/ui/dialogs/dish_dialog.dart';
 import 'package:flutter_dishes/src/ui/widgets/dish_list_view_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/page_widget.dart';
 
 class AdminDishesPage extends StatefulWidget {
   const AdminDishesPage({super.key});
@@ -17,6 +18,8 @@ class _AdminDishesPage extends State<AdminDishesPage> {
   final DishService dishService = DishService();
 
   late final Stream<QuerySnapshot<Object?>>? _stream;
+
+  final pageWidget = PageWidget();
 
   Future<void> getData() async {
     print('getData');
@@ -54,12 +57,10 @@ class _AdminDishesPage extends State<AdminDishesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Admin Dishes'),
-        actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.logout_outlined)),
-        ],
+      appBar: pageWidget.buildAppBar(
+        context,
+        'Admin Dishes',
+        PageContext.admin,
       ),
       body: DishListViewWidget(
         stream: _stream,

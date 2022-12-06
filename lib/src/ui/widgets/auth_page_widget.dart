@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
 
-class AuthWrapperWidget extends StatelessWidget {
+class AuthPageWidget extends StatelessWidget {
   final List<Widget> children;
 
   final double padding;
 
-  const AuthWrapperWidget({
+  const AuthPageWidget({
     super.key,
     required this.children,
     this.padding = Breakpoint.x1,

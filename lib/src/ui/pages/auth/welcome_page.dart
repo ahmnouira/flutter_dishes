@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/app_route.dart' show AppRoutes;
-import 'package:flutter_dishes/src/ui/widgets/auth_wrapper_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/auth_page_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
 
@@ -11,7 +11,7 @@ class WelcomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuthWrapperWidget(
+    return AuthPageWidget(
       children: [
         const Expanded(
           child: HeroWidget(),

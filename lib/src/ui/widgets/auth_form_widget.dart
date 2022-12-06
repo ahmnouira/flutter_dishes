@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dishes/src/data/assets/assets.dart';
 import 'package:flutter_dishes/src/theme/breakpoint.dart';
-import 'package:flutter_dishes/src/ui/widgets/auth_wrapper_widget.dart';
+import 'package:flutter_dishes/src/ui/widgets/auth_page_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/button_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/hero_widget.dart';
 import 'package:flutter_dishes/src/ui/widgets/text_field_widget.dart';
@@ -29,7 +29,7 @@ class AuthFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AuthWrapperWidget(children: [
+    return AuthPageWidget(children: [
       Expanded(
         child: HeroWidget(
           image: name == AuthFormName.login
