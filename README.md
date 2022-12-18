@@ -1,4 +1,6 @@
-# FlutterDishes
+# FlutterDishes 
+
+![visitors](https://visitor-badge.glitch.me/badge?page_id=ahmnouira.flutter_dishes)
 
 This a Flutter application that allows the admins to manage dishes and let users to save their favorite dishes.
 
